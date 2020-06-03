@@ -5,3 +5,4 @@ MESSAGES = {
     0: ['n1', 'n2', 'n3', 'n4', 'n5'],
     1: ['pos1', 'pos2', 'pos3', 'pos4', 'pos5']
 }
+GRAPH_URL = 'https://graph.facebook.com/v7.0/me/messages?access_token='
