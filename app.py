@@ -1,9 +1,9 @@
 import requests
 from flask import Flask, request
 
-from .credentials import ACCESS_TOKEN, VERIFY_TOKEN
-from .const import GRAPH_URL
-from .bot import Bot
+from credentials import ACCESS_TOKEN, VERIFY_TOKEN
+from const import GRAPH_URL
+from bot import Bot
 
 app = Flask(__name__)
 sensitive_bot = Bot()
