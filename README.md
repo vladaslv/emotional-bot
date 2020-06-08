@@ -1,45 +1,59 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+## Flask emotional facebook messenger bot
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
+```bash
+git clone https://<user_name>@bitbucket.org/vladyslava_solovei/emotional-bot.git
+cd emotional-bot
+virtualenv venv -p python3
+source venv/bin/activate
+pip3 install -r requirements.txt
 
-*We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket.*
+## Set credentials
+First you need an IBM account [activated]
+(https://cloud.ibm.com/).
 
----
+1. Create service [here]
+(https://cloud.ibm.com/catalog/services/tone-analyzer)
 
-## Edit a file
+2. Copy the credentials to authenticate to your service instance:
+On the Manage page, click Show Credentials to view your credentials.
+Copy the API Key(IAM_AUTHENTICATOR) and URL(SERVICE_URL) values and paste assign to values in credentials.py
 
-You’ll start by editing this README file to learn how to edit a file in Bitbucket.
+## Run server
 
-1. Click **Source** on the left side.
-2. Click the README.md link from the list of files.
-3. Click the **Edit** button.
-4. Delete the following text: *Delete this line to make a change to the README from Bitbucket.*
-5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and you’ll see the change you just made.
-6. Go back to the **Source** page.
+# on unix
+gunicorn app:app
 
----
+# on windows
+set FLASK_ENV=development
+flask run
+```
 
-## Create a file
+## How to create a (private) facebook messenger bot
 
-Next, you’ll add a new file to this repository.
+First of all you need a facebook account, logged in, with developer mode [activated](https://developers.facebook.com/).
 
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
+1. Create a new FB App [here](https://developers.facebook.com/quickstarts/?platform=web), just type in the name of your app (choose wisely, difficult to change afterwards), your contact mail and a captcha. Then click on "pass everything" on the top right. Go to your App, click "Products +" and set up Messanger.
 
-Before you move on, go ahead and explore the repository. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
+2. Create a new FB Page [here](https://www.facebook.com/pages/create), choose a category, a name (there's a special naming convention. choose wisely, also difficult to change afterwards).
 
----
+3. Go back to your app and click on "configure" on the messenger's tab.
 
-## Clone a repository
+4. In the "token generation" section, select the page you create earlier to generate an ACCESS_TOKEN. Assign it to variable ACCESS_TOKEN in credentials.py.(it's a big string like : EAACrKioFH4oBAM89bjAPrFmY[...])
 
-Use these steps to clone from SourceTree, our client for using the repository command-line free. Cloning allows you to work on your files locally. If you don't yet have SourceTree, [download and install first](https://www.sourcetreeapp.com/). If you prefer to clone from the command line, see [Clone a repository](https://confluence.atlassian.com/x/4whODQ).
+5. Create a VERIFY_TOKEN [with uuid](https://www.uuidgenerator.net/version4), assign it to VERIFY_TOKEN variable in credentials.py (for example : b030bde8-bd27-419d-a0b3-[...])
 
-1. You’ll see the clone button under the **Source** heading. Click that button.
-2. Now click **Check out in SourceTree**. You may need to create a SourceTree account or log in.
-3. When you see the **Clone New** dialog in SourceTree, update the destination path and name if you’d like to and then click **Clone**.
-4. Open the directory you just created to see your repository’s files.
+6. Deploy your app. You will need a HTTPS url. Heroku provides free plans to host an app, and it should work out of the box.
 
-Now that you're more familiar with your Bitbucket repository, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).
+	(https://heroku.com/deploy)
+
+	or use ngrok for testing:
+
+    ngrok http $PORT
+
+7. Click 'Add Callback URL' back in the Facebook Developers page (still in the Messenger tab). Paste the callback URL and paste your VERIFY_TOKEN created earlier.
+
+Check at least the 'messages' box in Subscription Fields, others are optional for the moment.
+
+8. Verify and Save
+
+9. If you did it correctly, your page should respond correctly.
