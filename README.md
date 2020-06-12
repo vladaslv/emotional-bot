@@ -1,7 +1,5 @@
 ## Flask emotional facebook messenger bot
 
-DEMO ONLINE [here](https://www.facebook.com/Emotional-Chatbot-114919856903555/)
-
 
 ```bash
 git clone https://<user_name>@bitbucket.org/vladyslava_solovei/emotional-bot.git
